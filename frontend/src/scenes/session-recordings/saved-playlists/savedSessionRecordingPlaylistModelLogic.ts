@@ -1,15 +1,15 @@
 import { actions, kea, path } from 'kea'
 import { loaders } from 'kea-loaders'
-import { SessionRecordingPlaylistType, SessionRecordingType } from '~/types'
-import type { savedSessionRecordingPlaylistModelLogicType } from './savedSessionRecordingPlaylistModelLogicType'
+import { router } from 'kea-router'
 import api from 'lib/api'
 import { lemonToast } from 'lib/components/lemonToast'
 import { deleteWithUndo, toParams } from 'lib/utils'
-import { DEFAULT_RECORDING_FILTERS } from 'scenes/session-recordings/playlist/sessionRecordingsListLogic'
-import { router } from 'kea-router'
-import { urls } from 'scenes/urls'
 import { openBillingPopupModal } from 'scenes/billing/v2/BillingPopup'
+import { DEFAULT_RECORDING_FILTERS } from 'scenes/session-recordings/playlist/sessionRecordingsListLogic'
 import { PLAYLIST_LIMIT_REACHED_MESSAGE } from 'scenes/session-recordings/sessionRecordingsLogic'
+import { urls } from 'scenes/urls'
+import { SessionRecordingPlaylistType, SessionRecordingType } from '~/types'
+import type { savedSessionRecordingPlaylistModelLogicType } from './savedSessionRecordingPlaylistModelLogicType'
 
 async function createPlaylist(
     playlist: Partial<SessionRecordingPlaylistType>,
@@ -92,7 +92,6 @@ export const savedSessionRecordingPlaylistModelLogic = kea<savedSessionRecording
 
                 const { id, short_id, ...partialPlaylist } = playlist
                 partialPlaylist.name = partialPlaylist.name ? partialPlaylist.name + ' (copy)' : ''
-                partialPlaylist.derived_name = partialPlaylist.derived_name
 
                 const newPlaylist = await createPlaylist(partialPlaylist, redirect)
                 breakpoint()

@@ -1,22 +1,22 @@
 import { kea } from 'kea'
 import api, { ACTIVITY_PAGE_SIZE, CountedPaginatedResponse } from 'lib/api'
+import { ActivityLogProps } from 'lib/components/ActivityLog/ActivityLog'
 import {
     ActivityLogItem,
     ActivityScope,
     Describer,
     humanize,
-    HumanizedActivityLogItem,
+    HumanizedActivityLogItem
 } from 'lib/components/ActivityLog/humanizeActivity'
-import { ActivityLogProps } from 'lib/components/ActivityLog/ActivityLog'
 
-import type { activityLogLogicType } from './activityLogLogicType'
-import { PaginationManual } from 'lib/components/PaginationControl'
-import { urls } from 'scenes/urls'
 import { router } from 'kea-router'
+import { PaginationManual } from 'lib/components/PaginationControl'
 import { flagActivityDescriber } from 'scenes/feature-flags/activityDescriptions'
+import { personActivityDescriber } from 'scenes/persons/activityDescriptions'
 import { pluginActivityDescriber } from 'scenes/plugins/pluginActivityDescriptions'
 import { insightActivityDescriber } from 'scenes/saved-insights/activityDescriptions'
-import { personActivityDescriber } from 'scenes/persons/activityDescriptions'
+import { urls } from 'scenes/urls'
+import type { activityLogLogicType } from './activityLogLogicType'
 
 /**
  * Having this function inside the `humanizeActivity module was causing very weird test errors in other modules
@@ -139,16 +139,16 @@ export const activityLogLogic = kea<activityLogLogicType>({
             }
         }
         return {
-            '/person/*': ({}, searchParams, hashParams) => onPageChange(searchParams, hashParams, ActivityScope.PERSON),
-            [urls.featureFlags()]: ({}, searchParams, hashParams) =>
+            '/person/*': (searchParams, hashParams) => onPageChange(searchParams, hashParams, ActivityScope.PERSON),
+            [urls.featureFlags()]: (searchParams, hashParams) =>
                 onPageChange(searchParams, hashParams, ActivityScope.FEATURE_FLAG),
-            [urls.savedInsights()]: ({}, searchParams, hashParams) =>
+            [urls.savedInsights()]: (searchParams, hashParams) =>
                 onPageChange(searchParams, hashParams, ActivityScope.INSIGHT),
-            [urls.projectApps()]: ({}, searchParams, hashParams) =>
+            [urls.projectApps()]: (searchParams, hashParams) =>
                 onPageChange(searchParams, hashParams, ActivityScope.PLUGIN),
-            [urls.featureFlag(':id')]: ({}, searchParams, hashParams) =>
+            [urls.featureFlag(':id')]: (searchParams, hashParams) =>
                 onPageChange(searchParams, hashParams, ActivityScope.FEATURE_FLAG, true),
-            [urls.appHistory(':pluginConfigId')]: ({}, searchParams, hashParams) =>
+            [urls.appHistory(':pluginConfigId')]: (searchParams, hashParams) =>
                 onPageChange(searchParams, hashParams, ActivityScope.PLUGIN, true),
         }
     },

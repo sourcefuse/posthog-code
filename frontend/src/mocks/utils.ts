@@ -11,8 +11,8 @@ export type Mocks = Partial<Record<keyof typeof rest, Record<string, MockSignatu
 
 export const mocksToHandlers = (mocks: Mocks): ReturnType<typeof rest['get']>[] => {
     const response: ReturnType<typeof rest['get']>[] = []
-    Object.entries(mocks).map(([method, mockHandlers]) => {
-        Object.entries(mockHandlers).map(([path, handler]) => {
+    Object.entries(mocks).forEach(([method, mockHandlers]) => {
+        Object.entries(mockHandlers).forEach(([path, handler]) => {
             const pathWithoutTrailingSlash = path.replace(/\/$/, '')
             response.push(
                 (rest[method] as typeof rest['get'])(pathWithoutTrailingSlash, async (req, res, ctx) => {

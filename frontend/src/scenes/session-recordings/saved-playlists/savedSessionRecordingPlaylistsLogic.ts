@@ -1,15 +1,15 @@
 import { actions, afterMount, connect, kea, key, listeners, path, props, reducers, selectors } from 'kea'
 import { loaders } from 'kea-loaders'
+import { actionToUrl, router, urlToAction } from 'kea-router'
 import api, { PaginatedResponse } from 'lib/api'
-import { objectClean, objectsEqual, toParams } from 'lib/utils'
-import { SessionRecordingPlaylistType, SessionRecordingsTabs } from '~/types'
-import { dayjs } from 'lib/dayjs'
-import type { savedSessionRecordingPlaylistsLogicType } from './savedSessionRecordingPlaylistsLogicType'
 import { Sorting } from 'lib/components/LemonTable'
 import { PaginationManual } from 'lib/components/PaginationControl'
-import { actionToUrl, router, urlToAction } from 'kea-router'
-import { urls } from 'scenes/urls'
+import { dayjs } from 'lib/dayjs'
+import { objectClean, objectsEqual, toParams } from 'lib/utils'
 import { savedSessionRecordingPlaylistModelLogic } from 'scenes/session-recordings/saved-playlists/savedSessionRecordingPlaylistModelLogic'
+import { urls } from 'scenes/urls'
+import { SessionRecordingPlaylistType, SessionRecordingsTabs } from '~/types'
+import type { savedSessionRecordingPlaylistsLogicType } from './savedSessionRecordingPlaylistsLogicType'
 
 export const PLAYLISTS_PER_PAGE = 30
 
@@ -65,7 +65,7 @@ export const savedSessionRecordingPlaylistsLogic = kea<savedSessionRecordingPlay
         updateLocalPlaylist: (playlist: SessionRecordingPlaylistType) => ({ playlist }),
         deleteLocalPlaylist: (playlist: SessionRecordingPlaylistType) => ({ playlist }),
     })),
-    reducers(({}) => ({
+    reducers(() => ({
         filters: [
             DEFAULT_PLAYLIST_FILTERS as SavedSessionRecordingPlaylistsFilters | Record<string, any>,
             {

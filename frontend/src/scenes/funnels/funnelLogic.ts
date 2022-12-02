@@ -1,10 +1,10 @@
-import { BreakPointFunction, kea } from 'kea'
 import equal from 'fast-deep-equal'
+import { BreakPointFunction, kea } from 'kea'
 import api from 'lib/api'
-import { insightLogic } from 'scenes/insights/insightLogic'
+import { BIN_COUNT_AUTO, FunnelLayout } from 'lib/constants'
 import { autoCaptureEventToDescription, average, percentage, sum } from 'lib/utils'
 import { eventUsageLogic } from 'lib/utils/eventUsageLogic'
-import type { funnelLogicType } from './funnelLogicType'
+import { insightLogic } from 'scenes/insights/insightLogic'
 import {
     AvailableFeature,
     BinCountValue,
@@ -38,8 +38,23 @@ import {
     StepOrderValue,
     TrendResult,
 } from '~/types'
-import { BIN_COUNT_AUTO, FunnelLayout } from 'lib/constants'
+import type { funnelLogicType } from './funnelLogicType'
 
+import { LemonSelectOptions } from 'lib/components/LemonSelect'
+import { lemonToast } from 'lib/components/lemonToast'
+import { visibilitySensorLogic } from 'lib/components/VisibilitySensor/visibilitySensorLogic'
+import { dayjs } from 'lib/dayjs'
+import { elementsToAction } from 'scenes/events/createActionFromEvent'
+import { isFunnelsFilter, keyForInsightLogicProps } from 'scenes/insights/sharedUtils'
+import { cleanFilters } from 'scenes/insights/utils/cleanFilters'
+import { funnelTitle } from 'scenes/trends/persons-modal/persons-modal-utils'
+import { openPersonsModal } from 'scenes/trends/persons-modal/PersonsModal'
+import { userLogic } from 'scenes/userLogic'
+import { dashboardsModel } from '~/models/dashboardsModel'
+import { groupPropertiesModel } from '~/models/groupPropertiesModel'
+import { groupsModel, Noun } from '~/models/groupsModel'
+import { personPropertiesModel } from '~/models/personPropertiesModel'
+import { teamLogic } from '../teamLogic'
 import {
     aggregateBreakdownResult,
     generateBaselineConversionUrl,
@@ -54,21 +69,6 @@ import {
     isStepsEmpty,
     isValidBreakdownParameter,
 } from './funnelUtils'
-import { dashboardsModel } from '~/models/dashboardsModel'
-import { cleanFilters } from 'scenes/insights/utils/cleanFilters'
-import { isFunnelsFilter, keyForInsightLogicProps } from 'scenes/insights/sharedUtils'
-import { teamLogic } from '../teamLogic'
-import { personPropertiesModel } from '~/models/personPropertiesModel'
-import { groupPropertiesModel } from '~/models/groupPropertiesModel'
-import { userLogic } from 'scenes/userLogic'
-import { visibilitySensorLogic } from 'lib/components/VisibilitySensor/visibilitySensorLogic'
-import { elementsToAction } from 'scenes/events/createActionFromEvent'
-import { groupsModel, Noun } from '~/models/groupsModel'
-import { dayjs } from 'lib/dayjs'
-import { lemonToast } from 'lib/components/lemonToast'
-import { LemonSelectOptions } from 'lib/components/LemonSelect'
-import { openPersonsModal } from 'scenes/trends/persons-modal/PersonsModal'
-import { funnelTitle } from 'scenes/trends/persons-modal/persons-modal-utils'
 
 /* Chosen via heuristics by eyeballing some values
  * Assuming a normal distribution, then 90% of values are within 1.5 standard deviations of the mean
@@ -1253,7 +1253,7 @@ export const funnelLogic = kea<funnelLogicType>({
                     : [],
             })
         },
-        clearFunnel: ({}) => {
+        clearFunnel: (_a = {}) => {
             actions.setFilters({ new_entity: values.filters.new_entity }, false, true)
         },
         openPersonsModalForStep: ({ step, stepIndex, converted }) => {

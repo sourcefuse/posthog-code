@@ -1,6 +1,6 @@
 import { actions, kea, path, reducers } from 'kea'
-import { SessionRecordingId, SessionRecordingType } from '~/types'
 import { actionToUrl, router, urlToAction } from 'kea-router'
+import { SessionRecordingId, SessionRecordingType } from '~/types'
 
 import type { sessionPlayerModalLogicType } from './sessionPlayerModalLogicType'
 
@@ -50,7 +50,7 @@ export const sessionPlayerModalLogic = kea<sessionPlayerModalLogicType>([
         }
 
         return {
-            openSessionPlayer: ({}) => buildURL(false),
+            openSessionPlayer: () => buildURL(false),
             closeSessionPlayer: () => buildURL(false),
         }
     }),

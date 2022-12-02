@@ -1,23 +1,23 @@
-import { useValues, useActions } from 'kea'
-import { MINIMUM_IMPLICIT_ACCESS_LEVEL, teamMembersLogic } from './teamMembersLogic'
-import { CloseCircleOutlined, LogoutOutlined, CrownFilled } from '@ant-design/icons'
-import { humanFriendlyDetailedTime } from 'lib/utils'
-import { OrganizationMembershipLevel, TeamMembershipLevel } from 'lib/constants'
-import { TeamType, UserType, FusedTeamMemberType } from '~/types'
-import { userLogic } from 'scenes/userLogic'
+import { CloseCircleOutlined, CrownFilled, LogoutOutlined } from '@ant-design/icons'
+import { LemonButton, LemonSelect, LemonSelectOption, LemonTable } from '@posthog/lemon-ui'
+import { useActions, useValues } from 'kea'
+import { LemonDialog } from 'lib/components/LemonDialog'
+import { LemonTableColumns } from 'lib/components/LemonTable'
 import { ProfilePicture } from 'lib/components/ProfilePicture'
-import { teamLogic } from 'scenes/teamLogic'
+import { RestrictedArea, RestrictionScope } from 'lib/components/RestrictedArea'
+import { Tooltip } from 'lib/components/Tooltip'
+import { OrganizationMembershipLevel, TeamMembershipLevel } from 'lib/constants'
+import { humanFriendlyDetailedTime } from 'lib/utils'
 import {
     getReasonForAccessLevelChangeProhibition,
     membershipLevelToName,
-    teamMembershipLevelIntegers,
+    teamMembershipLevelIntegers
 } from 'lib/utils/permissioning'
+import { teamLogic } from 'scenes/teamLogic'
+import { userLogic } from 'scenes/userLogic'
+import { FusedTeamMemberType, TeamType, UserType } from '~/types'
 import { AddMembersModalWithButton } from './AddMembersModal'
-import { RestrictedArea, RestrictionScope } from 'lib/components/RestrictedArea'
-import { LemonButton, LemonSelect, LemonSelectOption, LemonTable } from '@posthog/lemon-ui'
-import { LemonTableColumns } from 'lib/components/LemonTable'
-import { Tooltip } from 'lib/components/Tooltip'
-import { LemonDialog } from 'lib/components/LemonDialog'
+import { MINIMUM_IMPLICIT_ACCESS_LEVEL, teamMembersLogic } from './teamMembersLogic'
 
 function LevelComponent(member: FusedTeamMemberType): JSX.Element | null {
     const { user } = useValues(userLogic)
@@ -63,10 +63,7 @@ function LevelComponent(member: FusedTeamMemberType): JSX.Element | null {
                     ({
                         value: listLevel,
                         disabled: listLevel === member.explicit_team_level,
-                        label:
-                            listLevel > member.level
-                                ? membershipLevelToName.get(listLevel)
-                                : membershipLevelToName.get(listLevel),
+                        label: membershipLevelToName.get(listLevel)
                     } as LemonSelectOption<TeamMembershipLevel>)
             )}
             value={member.explicit_team_level}

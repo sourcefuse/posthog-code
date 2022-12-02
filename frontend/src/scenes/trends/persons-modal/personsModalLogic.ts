@@ -1,16 +1,16 @@
-import { kea, connect, path, key, props, reducers, actions, selectors, listeners, afterMount } from 'kea'
-import api from 'lib/api'
-import { ActorType } from '~/types'
-import { loaders } from 'kea-loaders'
-import { cohortsModel } from '~/models/cohortsModel'
 import { lemonToast } from '@posthog/lemon-ui'
+import { actions, afterMount, connect, kea, key, listeners, path, props, reducers, selectors } from 'kea'
+import { loaders } from 'kea-loaders'
 import { router, urlToAction } from 'kea-router'
+import api from 'lib/api'
 import { urls } from 'scenes/urls'
+import { cohortsModel } from '~/models/cohortsModel'
+import { ActorType } from '~/types'
 
-import type { personsModalLogicType } from './personsModalLogicType'
-import { eventUsageLogic } from 'lib/utils/eventUsageLogic'
 import { fromParamsGivenUrl, isGroupType } from 'lib/utils'
+import { eventUsageLogic } from 'lib/utils/eventUsageLogic'
 import { groupsModel } from '~/models/groupsModel'
+import type { personsModalLogicType } from './personsModalLogicType'
 
 export interface PersonModalLogicProps {
     url: string
@@ -103,7 +103,7 @@ export const personsModalLogic = kea<personsModalLogicType>([
     })),
 
     listeners(({ actions, props }) => ({
-        setSearchTerm: async ({}, breakpoint) => {
+        setSearchTerm: async (_a = {}, breakpoint) => {
             await breakpoint(500)
             actions.loadActors({ url: props.url, clear: true })
         },

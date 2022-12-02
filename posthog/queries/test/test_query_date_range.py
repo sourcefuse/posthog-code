@@ -17,7 +17,8 @@ class TestQueryDateRange(APIBaseTest):
                 }
             )
 
-            query_date_range = QueryDateRange(filter=filter, team=self.team, should_round=False)
+            query_date_range = QueryDateRange(
+                filter=filter, team=self.team, should_round=False)
             parsed_date_from, date_from_params = query_date_range.date_from
             parsed_date_to, date_to_params = query_date_range.date_to
 
@@ -40,7 +41,8 @@ class TestQueryDateRange(APIBaseTest):
                 }
             )
 
-            query_date_range = QueryDateRange(filter=filter, team=self.team, should_round=False)
+            query_date_range = QueryDateRange(
+                filter=filter, team=self.team, should_round=False)
             parsed_date_from, date_from_params = query_date_range.date_from
             parsed_date_to, date_to_params = query_date_range.date_to
 
@@ -64,7 +66,8 @@ class TestQueryDateRange(APIBaseTest):
                 }
             )
 
-            query_date_range = QueryDateRange(filter=filter, team=self.team, should_round=False)
+            query_date_range = QueryDateRange(
+                filter=filter, team=self.team, should_round=False)
             parsed_date_from, date_from_params = query_date_range.date_from
             parsed_date_to, date_to_params = query_date_range.date_to
 
@@ -156,7 +159,8 @@ class TestQueryDateRange(APIBaseTest):
 
         query_date_range = QueryDateRange(filter=filter, team=self.team)
 
-        self.assertEquals(query_date_range.interval_annotation, "toStartOfWeek")
+        self.assertEquals(
+            query_date_range.interval_annotation, "toStartOfWeek")
 
         with freeze_time("2021-08-25T00:00:00.000Z"):
             filter = Filter(
@@ -181,4 +185,3 @@ class TestQueryDateRange(APIBaseTest):
         # filter handling will throw not the class
         with self.assertRaises(ValueError) as _:
             query_date_range = QueryDateRange(filter=filter, team=self.team)
-            query_date_range.interval_annotation

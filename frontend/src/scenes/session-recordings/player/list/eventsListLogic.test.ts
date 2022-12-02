@@ -1,18 +1,18 @@
 import { expectLogic } from 'kea-test-utils'
+import { eventUsageLogic } from 'lib/utils/eventUsageLogic'
 import { List } from 'react-virtualized/dist/es/List'
-import { initKeaTests } from '~/test/init'
 import {
     DEFAULT_SCROLLING_RESET_TIME_INTERVAL,
-    eventsListLogic,
+    eventsListLogic
 } from 'scenes/session-recordings/player/list/eventsListLogic'
-import { sessionRecordingDataLogic } from 'scenes/session-recordings/player/sessionRecordingDataLogic'
-import { eventUsageLogic } from 'lib/utils/eventUsageLogic'
-import { sessionRecordingPlayerLogic } from 'scenes/session-recordings/player/sessionRecordingPlayerLogic'
-import { useMocks } from '~/mocks/jest'
-import recordingSnapshotsJson from 'scenes/session-recordings/__mocks__/recording_snapshots.json'
-import recordingMetaJson from 'scenes/session-recordings/__mocks__/recording_meta.json'
-import recordingEventsJson from 'scenes/session-recordings/__mocks__/recording_events.json'
 import { sharedListLogic } from 'scenes/session-recordings/player/list/sharedListLogic'
+import { sessionRecordingDataLogic } from 'scenes/session-recordings/player/sessionRecordingDataLogic'
+import { sessionRecordingPlayerLogic } from 'scenes/session-recordings/player/sessionRecordingPlayerLogic'
+import recordingEventsJson from 'scenes/session-recordings/__mocks__/recording_events.json'
+import recordingMetaJson from 'scenes/session-recordings/__mocks__/recording_meta.json'
+import recordingSnapshotsJson from 'scenes/session-recordings/__mocks__/recording_snapshots.json'
+import { useMocks } from '~/mocks/jest'
+import { initKeaTests } from '~/test/init'
 import { MatchedRecordingEvents } from '~/types'
 
 const playerLogicProps = { sessionRecordingId: '1', playerKey: 'playlist' }
@@ -135,7 +135,7 @@ describe('eventsListLogic', () => {
         it('scroll to specific rowIndex', async () => {
             const mockedList = {
                 scrollToPosition: jest.fn(),
-                getOffsetForRow: jest.fn(({}: { alignment: string; index: number }) => 40),
+                getOffsetForRow: jest.fn((_a: { alignment: string; index: number }) => 40),
             }
 
             await expectLogic(logic, async () => {

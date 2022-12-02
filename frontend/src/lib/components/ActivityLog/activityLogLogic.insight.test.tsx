@@ -1,8 +1,8 @@
-import { ActivityScope } from 'lib/components/ActivityLog/humanizeActivity'
-import { render } from '@testing-library/react'
 import '@testing-library/jest-dom'
+import { render } from '@testing-library/react'
 import { MOCK_TEAM_ID } from 'lib/api.mock'
 import { makeTestSetup } from 'lib/components/ActivityLog/activityLogLogic.test.setup'
+import { ActivityScope } from 'lib/components/ActivityLog/humanizeActivity'
 
 describe('the activity log logic', () => {
     describe('humanizing insights', () => {
@@ -323,7 +323,7 @@ describe('the activity log logic', () => {
             )
         })
         const formats = ['png', 'pdf', 'csv']
-        formats.map((format) => {
+        formats.forEach((format) => {
             it(`can handle export of insight to ${format}`, async () => {
                 const logic = await insightTestSetup('test insight', 'exported', [
                     {

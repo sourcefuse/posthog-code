@@ -1,6 +1,6 @@
-import { kea, path, connect, actions, reducers } from 'kea'
-import { urlToAction } from 'kea-router'
+import { actions, connect, kea, path, reducers } from 'kea'
 import { forms } from 'kea-forms'
+import { urlToAction } from 'kea-router'
 import api from 'lib/api'
 import { preflightLogic } from 'scenes/PreflightCheck/preflightLogic'
 import type { signupTestLogicType } from './signupTestLogicType'
@@ -97,7 +97,7 @@ export const signupTestLogic = kea<signupTestLogicType>([
         },
     })),
     urlToAction(({ actions }) => ({
-        '/signup': ({}, { email, values }) => {
+        '/signup': (_a = {}, { email, values }) => {
             if (email) {
                 if (values.preflight?.demo) {
                     // In demo mode no password is needed, so we can log in right away

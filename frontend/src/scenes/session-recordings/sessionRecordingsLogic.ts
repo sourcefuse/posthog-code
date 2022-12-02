@@ -1,12 +1,12 @@
 import { actions, connect, kea, listeners, path, reducers, selectors } from 'kea'
-import { Breadcrumb, SessionRecordingsTabs } from '~/types'
-import { urls } from 'scenes/urls'
 import { actionToUrl, router, urlToAction } from 'kea-router'
-import type { sessionRecordingsLogicType } from './sessionRecordingsLogicType'
-import { featureFlagLogic } from 'lib/logic/featureFlagLogic'
 import { SESSION_RECORDINGS_PLAYLIST_FREE_COUNT } from 'lib/constants'
+import { featureFlagLogic } from 'lib/logic/featureFlagLogic'
 import { capitalizeFirstLetter } from 'lib/utils'
 import { savedSessionRecordingPlaylistModelLogic } from 'scenes/session-recordings/saved-playlists/savedSessionRecordingPlaylistModelLogic'
+import { urls } from 'scenes/urls'
+import { Breadcrumb, SessionRecordingsTabs } from '~/types'
+import type { sessionRecordingsLogicType } from './sessionRecordingsLogicType'
 
 export const humanFriendlyTabName = (tab: SessionRecordingsTabs): string => {
     switch (tab) {
@@ -39,7 +39,7 @@ export const sessionRecordingsLogic = kea<sessionRecordingsLogicType>([
         setTab: (tab: SessionRecordingsTabs = SessionRecordingsTabs.Recent) => ({ tab }),
         saveNewPlaylist: true,
     }),
-    reducers(({}) => ({
+    reducers(() => ({
         tab: [
             SessionRecordingsTabs.Recent as SessionRecordingsTabs,
             {
@@ -66,7 +66,7 @@ export const sessionRecordingsLogic = kea<sessionRecordingsLogicType>([
         }
     }),
 
-    selectors(({}) => ({
+    selectors(() => ({
         newPlaylistLoading: [(s) => [s._playlistModelLoading], (_playlistModelLoading) => !!_playlistModelLoading],
         breadcrumbs: [
             (s) => [s.tab],

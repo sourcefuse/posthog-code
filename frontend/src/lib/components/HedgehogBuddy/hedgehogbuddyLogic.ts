@@ -1,7 +1,7 @@
 import { actions, kea, listeners, path, reducers } from 'kea'
 
-import type { hedgehogbuddyLogicType } from './hedgehogbuddyLogicType'
 import posthog from 'posthog-js'
+import type { hedgehogbuddyLogicType } from './hedgehogbuddyLogicType'
 
 export const hedgehogbuddyLogic = kea<hedgehogbuddyLogicType>([
     path(['hedgehog', 'hedgehogbuddyLogic']),
@@ -9,7 +9,7 @@ export const hedgehogbuddyLogic = kea<hedgehogbuddyLogicType>([
         setHedgehogModeEnabled: (enabled: boolean) => ({ enabled }),
     }),
 
-    reducers(({}) => ({
+    reducers(() => ({
         hedgehogModeEnabled: [
             false as boolean,
             { persist: true },
@@ -19,7 +19,7 @@ export const hedgehogbuddyLogic = kea<hedgehogbuddyLogicType>([
         ],
     })),
 
-    listeners(({}) => ({
+    listeners(() => ({
         setHedgehogModeEnabled: ({ enabled }) => {
             if (enabled) {
                 posthog.capture('hedgehog mode enabled')

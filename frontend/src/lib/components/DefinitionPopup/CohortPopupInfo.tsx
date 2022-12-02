@@ -1,22 +1,22 @@
-import { AnyCohortCriteriaType, CohortType, FilterLogicalOperator } from '~/types'
+import { useValues } from 'kea'
 import { DefinitionPopup } from 'lib/components/DefinitionPopup/DefinitionPopup'
 import {
     eventToHumanName,
     genericOperatorToHumanName,
     operatorToHumanName,
-    propertyValueToHumanName,
+    propertyValueToHumanName
 } from 'lib/components/DefinitionPopup/utils'
+import { pluralize } from 'lib/utils'
+import { BEHAVIORAL_TYPE_TO_LABEL } from 'scenes/cohorts/CohortFilters/constants'
 import {
     COHORT_MATCHING_DAYS,
     criteriaToBehavioralFilterType,
     criteriaToHumanSentence,
-    isCohortCriteriaGroup,
+    isCohortCriteriaGroup
 } from 'scenes/cohorts/cohortUtils'
-import { pluralize } from 'lib/utils'
-import { BEHAVIORAL_TYPE_TO_LABEL } from 'scenes/cohorts/CohortFilters/constants'
-import { useValues } from 'kea'
-import { cohortsModel } from '~/models/cohortsModel'
 import { actionsModel } from '~/models/actionsModel'
+import { cohortsModel } from '~/models/cohortsModel'
+import { AnyCohortCriteriaType, CohortType, FilterLogicalOperator } from '~/types'
 
 const MAX_CRITERIA_GROUPS = 2
 const MAX_CRITERIA = 2
@@ -30,7 +30,7 @@ export function CohortPopupInfo({ cohort }: { cohort: CohortType }): JSX.Element
     }
     return cohort.filters?.properties ? (
         <>
-            {(cohort.filters.properties?.values?.length || 0 > 0) && <DefinitionPopup.HorizontalLine />}
+            {(cohort.filters.properties?.values?.length > 0) && <DefinitionPopup.HorizontalLine />}
             {cohort.filters.properties.values.slice(0, MAX_CRITERIA_GROUPS).map(
                 (cohortGroup, cohortGroupIndex) =>
                     isCohortCriteriaGroup(cohortGroup) && (
@@ -95,7 +95,7 @@ export function CohortPopupInfo({ cohort }: { cohort: CohortType }): JSX.Element
         </>
     ) : (
         <>
-            {(cohort.groups?.length || 0 > 0) && <DefinitionPopup.HorizontalLine />}
+            {(cohort.groups?.length > 0) && <DefinitionPopup.HorizontalLine />}
             {cohort.groups &&
                 cohort.groups.map((group, index) => (
                     <DefinitionPopup.Section key={index}>

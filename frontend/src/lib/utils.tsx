@@ -1,5 +1,12 @@
+import * as Sentry from '@sentry/react'
+import equal from 'fast-deep-equal'
+import { tagColors } from 'lib/colors'
+import { KeyMappingInterface } from 'lib/components/PropertyKeyInfo'
+import { WEBHOOK_SERVICES } from 'lib/constants'
+import { dayjs } from 'lib/dayjs'
+import { AlignType } from 'rc-trigger/lib/interface'
 import { CSSProperties } from 'react'
-import api from './api'
+import { BehavioralFilterKey } from 'scenes/cohorts/CohortFilters/types'
 import {
     ActionFilter,
     ActionType,
@@ -22,20 +29,13 @@ import {
     PropertyGroupFilterValue,
     PropertyOperator,
     PropertyType,
-    TimeUnitType,
+    TimeUnitType
 } from '~/types'
-import * as Sentry from '@sentry/react'
-import equal from 'fast-deep-equal'
-import { tagColors } from 'lib/colors'
-import { WEBHOOK_SERVICES } from 'lib/constants'
-import { KeyMappingInterface } from 'lib/components/PropertyKeyInfo'
-import { AlignType } from 'rc-trigger/lib/interface'
-import { dayjs } from 'lib/dayjs'
-import { getAppContext } from './utils/getAppContext'
-import { isPropertyFilterWithOperator, isValidPropertyFilter } from './components/PropertyFilters/utils'
+import api from './api'
 import { IconCopy } from './components/icons'
 import { lemonToast } from './components/lemonToast'
-import { BehavioralFilterKey } from 'scenes/cohorts/CohortFilters/types'
+import { isPropertyFilterWithOperator, isValidPropertyFilter } from './components/PropertyFilters/utils'
+import { getAppContext } from './utils/getAppContext'
 
 export const ANTD_TOOLTIP_PLACEMENTS: Record<any, AlignType> = {
     // `@yiminghe/dom-align` objects
@@ -914,7 +914,7 @@ export function dateStringToDayJs(date: string | null): dayjs.Dayjs | null {
     if (isDate.test(date || '')) {
         return dayjs(date)
     }
-    const parseDate = /^([\-\+]?)([0-9]*)([dmwqy])(|Start|End)$/
+    const parseDate = /^([\-\+]?)([0-9]*)([dmwqy])(Start|End)$/
     const matches = (date || '').match(parseDate)
     let response: null | dayjs.Dayjs = null
     if (matches) {

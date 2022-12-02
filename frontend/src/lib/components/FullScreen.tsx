@@ -15,13 +15,12 @@ export function FullScreen({ onExit }: { onExit?: () => any }): null {
             }
         }
 
-        try {
-            window.document.body.requestFullscreen().then(() => {
-                window.addEventListener('fullscreenchange', handler, false)
-            })
-        } catch {
-            // will break on IE11
-        }
+        window.document.body.requestFullscreen().then(() => {
+            window.addEventListener('fullscreenchange', handler, false)
+        }).catch(() => {
+            // do nothing
+        })
+        
 
         try {
             window.dispatchEvent(new window.Event('scroll'))

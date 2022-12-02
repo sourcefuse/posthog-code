@@ -1,9 +1,9 @@
 import { kea } from 'kea'
 import api from 'lib/api'
-import { PersonalAPIKeyType } from '~/types'
-import type { personalAPIKeysLogicType } from './personalAPIKeysLogicType'
 import { copyToClipboard } from 'lib/utils'
+import { PersonalAPIKeyType } from '~/types'
 import { lemonToast } from '../lemonToast'
+import type { personalAPIKeysLogicType } from './personalAPIKeysLogicType'
 
 export const personalAPIKeysLogic = kea<personalAPIKeysLogicType>({
     path: ['lib', 'components', 'PersonalAPIKeys', 'personalAPIKeysLogic'],
@@ -32,7 +32,7 @@ export const personalAPIKeysLogic = kea<personalAPIKeysLogicType>({
         createKeySuccess: ({ keys }: { keys: PersonalAPIKeyType[] }) => {
             keys[0]?.value && copyToClipboard(keys[0].value, 'personal API key value')
         },
-        deleteKeySuccess: ({}: { keys: PersonalAPIKeyType[] }) => {
+        deleteKeySuccess: () => {
             lemonToast.success(`Personal API key deleted`)
         },
     }),

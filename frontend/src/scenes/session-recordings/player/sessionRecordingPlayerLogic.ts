@@ -1,28 +1,28 @@
+import equal from 'fast-deep-equal'
 import { actions, connect, events, kea, key, listeners, path, props, propsChanged, reducers, selectors } from 'kea'
 import { windowValues } from 'kea-window-values'
-import type { sessionRecordingPlayerLogicType } from './sessionRecordingPlayerLogicType'
-import { Replayer } from 'rrweb'
+import { fromParamsGivenUrl } from 'lib/utils'
 import { eventUsageLogic } from 'lib/utils/eventUsageLogic'
+import { getBreakpoint } from 'lib/utils/responsiveUtils'
+import { Replayer } from 'rrweb'
+import { sharedListLogic } from 'scenes/session-recordings/player/list/sharedListLogic'
+import { sessionRecordingDataLogic } from 'scenes/session-recordings/player/sessionRecordingDataLogic'
 import {
     MatchedRecording,
     PlayerPosition,
     RecordingSegment,
     SessionPlayerState,
     SessionRecordingId,
-    SessionRecordingType,
+    SessionRecordingType
 } from '~/types'
-import { getBreakpoint } from 'lib/utils/responsiveUtils'
-import { sessionRecordingDataLogic } from 'scenes/session-recordings/player/sessionRecordingDataLogic'
+import { playerSettingsLogic } from './playerSettingsLogic'
 import {
     comparePlayerPositions,
     getPlayerPositionFromPlayerTime,
     getPlayerTimeFromPlayerPosition,
-    getSegmentFromPlayerPosition,
+    getSegmentFromPlayerPosition
 } from './playerUtils'
-import { playerSettingsLogic } from './playerSettingsLogic'
-import { sharedListLogic } from 'scenes/session-recordings/player/list/sharedListLogic'
-import equal from 'fast-deep-equal'
-import { fromParamsGivenUrl } from 'lib/utils'
+import type { sessionRecordingPlayerLogicType } from './sessionRecordingPlayerLogicType'
 
 export const PLAYBACK_SPEEDS = [0.5, 1, 2, 4, 8, 16]
 export const ONE_FRAME_MS = 100 // We don't really have frames but this feels granular enough
@@ -156,8 +156,8 @@ export const sessionRecordingPlayerLogic = kea<sessionRecordingPlayerLogicType>(
         isErrored: [false, { setErrorPlayerState: (_, { show }) => show }],
         isScrubbing: [false, { startScrub: () => true, endScrub: () => false }],
 
-        errorCount: [0, { incrementErrorCount: (prevErrorCount, {}) => prevErrorCount + 1 }],
-        warningCount: [0, { incrementWarningCount: (prevWarningCount, {}) => prevWarningCount + 1 }],
+        errorCount: [0, { incrementErrorCount: (prevErrorCount) => prevErrorCount + 1 }],
+        warningCount: [0, { incrementWarningCount: (prevWarningCount) => prevWarningCount + 1 }],
         matching: [
             props.matching ?? ([] as SessionRecordingType['matching_events']),
             {

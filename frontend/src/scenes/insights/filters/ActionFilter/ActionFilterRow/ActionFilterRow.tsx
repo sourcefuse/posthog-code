@@ -1,44 +1,38 @@
+import { LemonSelect, LemonSelectOption, LemonSelectOptions } from '@posthog/lemon-ui'
 import { useActions, useValues } from 'kea'
-import { Tooltip } from 'lib/components/Tooltip'
-import {
-    ActionFilter as ActionFilterType,
-    ActionFilter,
-    EntityType,
-    EntityTypes,
-    FunnelStepRangeEntityFilter,
-    PropertyFilterValue,
-    BaseMathType,
-    PropertyMathType,
-    CountPerActorMathType,
-} from '~/types'
+import { EntityFilterInfo } from 'lib/components/EntityFilterInfo'
+import { IconCopy, IconDelete, IconEdit, IconFilter, IconWithCount, SortableDragIcon } from 'lib/components/icons'
+import { LemonButton, LemonButtonWithPopup } from 'lib/components/LemonButton'
 import { PropertyFilters } from 'lib/components/PropertyFilters/PropertyFilters'
-import { entityFilterLogic } from '../entityFilterLogic'
-import { getEventNamesForAction } from 'lib/utils'
+import { PropertyKeyInfo } from 'lib/components/PropertyKeyInfo'
 import { SeriesGlyph, SeriesLetter } from 'lib/components/SeriesGlyph'
-import './ActionFilterRow.scss'
 import { TaxonomicFilter } from 'lib/components/TaxonomicFilter/TaxonomicFilter'
 import { TaxonomicFilterGroupType } from 'lib/components/TaxonomicFilter/types'
-import { EntityFilterInfo } from 'lib/components/EntityFilterInfo'
+import { TaxonomicStringPopup } from 'lib/components/TaxonomicPopup/TaxonomicPopup'
+import { Tooltip } from 'lib/components/Tooltip'
+import { FEATURE_FLAGS } from 'lib/constants'
+import { featureFlagLogic } from 'lib/logic/featureFlagLogic'
+import { getEventNamesForAction } from 'lib/utils'
+import { useState } from 'react'
+import { SortableHandle as sortableHandle } from 'react-sortable-hoc'
+import { GroupIntroductionFooter } from 'scenes/groups/GroupsIntroduction'
 import {
     apiValueToMathType,
     COUNT_PER_ACTOR_MATH_DEFINITIONS,
     MathCategory,
     mathsLogic,
     mathTypeToApiValues,
-    PROPERTY_MATH_DEFINITIONS,
+    PROPERTY_MATH_DEFINITIONS
 } from 'scenes/trends/mathsLogic'
 import { actionsModel } from '~/models/actionsModel'
-import { PropertyKeyInfo } from 'lib/components/PropertyKeyInfo'
-import { TaxonomicStringPopup } from 'lib/components/TaxonomicPopup/TaxonomicPopup'
-import { IconCopy, IconDelete, IconEdit, IconFilter, IconWithCount } from 'lib/components/icons'
-import { SortableHandle as sortableHandle } from 'react-sortable-hoc'
-import { SortableDragIcon } from 'lib/components/icons'
-import { LemonButton, LemonButtonWithPopup } from 'lib/components/LemonButton'
-import { LemonSelect, LemonSelectOption, LemonSelectOptions } from '@posthog/lemon-ui'
-import { useState } from 'react'
-import { featureFlagLogic } from 'lib/logic/featureFlagLogic'
-import { FEATURE_FLAGS } from 'lib/constants'
-import { GroupIntroductionFooter } from 'scenes/groups/GroupsIntroduction'
+import {
+    ActionFilter, ActionFilter as ActionFilterType, BaseMathType, CountPerActorMathType, EntityType,
+    EntityTypes,
+    FunnelStepRangeEntityFilter,
+    PropertyFilterValue, PropertyMathType
+} from '~/types'
+import { entityFilterLogic } from '../entityFilterLogic'
+import './ActionFilterRow.scss'
 
 const DragHandle = sortableHandle(() => (
     <span className="ActionFilterRowDragHandle">
@@ -240,7 +234,7 @@ export function ActionFilterRow({
     const propertyFiltersButton = (
         <IconWithCount count={filter.properties?.length || 0} showZero={false}>
             <LemonButton
-                icon={propertyFiltersVisible ? <IconFilter /> : <IconFilter />} // TODO: Get new IconFilterStriked icon
+                icon={<IconFilter />} // TODO: Get new IconFilterStriked icon
                 status="primary-alt"
                 title="Show filters"
                 data-attr={`show-prop-filter-${index}`}

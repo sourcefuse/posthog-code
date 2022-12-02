@@ -1,5 +1,5 @@
 export const reportA11y = (options, tag, skipFailures = true) => {
-    if (typeof tag !== undefined) {
+    if (typeof tag !== 'undefined') {
         tag += '-'
     }
 

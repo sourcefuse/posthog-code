@@ -1,16 +1,16 @@
 import { kea } from 'kea'
 import { router } from 'kea-router'
 import api from 'lib/api'
-import type { personsLogicType } from './personsLogicType'
-import { Breadcrumb, CohortType, ExporterFormat, PersonListParams, PersonsTabType, PersonType } from '~/types'
-import { eventUsageLogic } from 'lib/utils/eventUsageLogic'
-import { urls } from 'scenes/urls'
-import { teamLogic } from 'scenes/teamLogic'
-import { convertPropertyGroupToProperties, toParams } from 'lib/utils'
-import { asDisplay } from 'scenes/persons/PersonHeader'
-import { isValidPropertyFilter } from 'lib/components/PropertyFilters/utils'
-import { lemonToast } from 'lib/components/lemonToast'
 import { TriggerExportProps } from 'lib/components/ExportButton/exporter'
+import { lemonToast } from 'lib/components/lemonToast'
+import { isValidPropertyFilter } from 'lib/components/PropertyFilters/utils'
+import { convertPropertyGroupToProperties, toParams } from 'lib/utils'
+import { eventUsageLogic } from 'lib/utils/eventUsageLogic'
+import { asDisplay } from 'scenes/persons/PersonHeader'
+import { teamLogic } from 'scenes/teamLogic'
+import { urls } from 'scenes/urls'
+import { Breadcrumb, CohortType, ExporterFormat, PersonListParams, PersonsTabType, PersonType } from '~/types'
+import type { personsLogicType } from './personsLogicType'
 
 export interface PersonPaginatedResponse {
     next: string | null
@@ -312,7 +312,7 @@ export const personsLogic = kea<personsLogicType>({
         },
     }),
     urlToAction: ({ actions, values, props }) => ({
-        '/persons': ({}, searchParams) => {
+        '/persons': (_a = {}, searchParams) => {
             if (props.syncWithUrl) {
                 actions.setListFilters(searchParams)
                 if (!values.persons.results.length && !values.personsLoading) {

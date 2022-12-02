@@ -1,12 +1,12 @@
-import { actions, afterMount, connect, kea, key, listeners, path, props, reducers, selectors } from 'kea'
-import { Breadcrumb, RecordingFilters, SessionRecordingPlaylistType, SessionRecordingsTabs } from '~/types'
-import type { sessionRecordingsPlaylistLogicType } from './sessionRecordingsPlaylistLogicType'
-import { urls } from 'scenes/urls'
 import equal from 'fast-deep-equal'
+import { actions, afterMount, connect, kea, key, listeners, path, props, reducers, selectors } from 'kea'
 import { beforeUnload } from 'kea-router'
-import { cohortsModel } from '~/models/cohortsModel'
 import { summarizePlaylistFilters } from 'scenes/session-recordings/playlist/playlistUtils'
 import { savedSessionRecordingPlaylistModelLogic } from 'scenes/session-recordings/saved-playlists/savedSessionRecordingPlaylistModelLogic'
+import { urls } from 'scenes/urls'
+import { cohortsModel } from '~/models/cohortsModel'
+import { Breadcrumb, RecordingFilters, SessionRecordingPlaylistType, SessionRecordingsTabs } from '~/types'
+import type { sessionRecordingsPlaylistLogicType } from './sessionRecordingsPlaylistLogicType'
 
 export interface SessionRecordingsPlaylistLogicProps {
     shortId: string
@@ -42,7 +42,7 @@ export const sessionRecordingsPlaylistLogic = kea<sessionRecordingsPlaylistLogic
         setFilters: (filters: RecordingFilters | null) => ({ filters }),
         saveChanges: true,
     }),
-    reducers(({}) => ({
+    reducers(() => ({
         playlist: [
             null as SessionRecordingPlaylistType | null,
             {
@@ -89,7 +89,7 @@ export const sessionRecordingsPlaylistLogic = kea<sessionRecordingsPlaylistLogic
         },
     })),
 
-    selectors(({}) => ({
+    selectors(() => ({
         playlistLoading: [(s) => [s._playlistModelLoading], (_playlistModelLoading) => !!_playlistModelLoading],
         breadcrumbs: [
             (s) => [s.playlist],

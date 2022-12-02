@@ -1,13 +1,13 @@
-import { useMemo, useState } from 'react'
-import { Button, Checkbox, Collapse, Table } from 'antd'
 import { ReloadOutlined } from '@ant-design/icons'
+import { Button, Checkbox, Collapse, Table } from 'antd'
+import { ColumnsType } from 'antd/lib/table'
 import { useActions, useValues } from 'kea'
+import { Link } from 'lib/components/Link'
+import { useMemo, useState } from 'react'
 import { Dashboard } from 'scenes/dashboard/Dashboard'
+import { AnalyzeQueryModal } from 'scenes/instance/SystemStatus/AnalyzeQueryModal'
 import { systemStatusLogic } from 'scenes/instance/SystemStatus/systemStatusLogic'
 import { DashboardPlacement, QuerySummary } from '~/types'
-import { ColumnsType } from 'antd/lib/table'
-import { AnalyzeQueryModal } from 'scenes/instance/SystemStatus/AnalyzeQueryModal'
-import { Link } from 'lib/components/Link'
 
 export function InternalMetricsTab(): JSX.Element {
     const { openSections, systemStatus, queries, queriesLoading, showAnalyzeQueryButton } = useValues(systemStatusLogic)
@@ -105,7 +105,7 @@ function QueryTable(props: {
         {
             title: 'query',
             dataIndex: 'query',
-            render: function RenderAnalyze({}, item: QuerySummary) {
+            render: function RenderAnalyze(_a = {}, item: QuerySummary) {
                 if (!props.showAnalyze) {
                     return item.query
                 }

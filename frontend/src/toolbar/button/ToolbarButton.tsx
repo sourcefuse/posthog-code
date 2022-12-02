@@ -1,23 +1,23 @@
 import './ToolbarButton.scss'
 
-import { useRef, useEffect } from 'react'
+import { AimOutlined, QuestionOutlined } from '@ant-design/icons'
 import { useActions, useValues } from 'kea'
+import { Tooltip } from 'lib/components/Tooltip'
+import { useLongPress } from 'lib/hooks/useLongPress'
+import { useEffect, useRef } from 'react'
+import { actionsLogic } from '~/toolbar/actions/actionsLogic'
+import { actionsTabLogic } from '~/toolbar/actions/actionsTabLogic'
 import { HogLogo } from '~/toolbar/assets/HogLogo'
 import { Circle } from '~/toolbar/button/Circle'
+import { Close } from '~/toolbar/button/icons/Close'
+import { Fire } from '~/toolbar/button/icons/Fire'
+import { Flag } from '~/toolbar/button/icons/Flag'
+import { Magnifier } from '~/toolbar/button/icons/Magnifier'
 import { toolbarButtonLogic } from '~/toolbar/button/toolbarButtonLogic'
+import { elementsLogic } from '~/toolbar/elements/elementsLogic'
 import { heatmapLogic } from '~/toolbar/elements/heatmapLogic'
 import { toolbarLogic } from '~/toolbar/toolbarLogic'
 import { getShadowRoot, getShadowRootPopupContainer } from '~/toolbar/utils'
-import { elementsLogic } from '~/toolbar/elements/elementsLogic'
-import { useLongPress } from 'lib/hooks/useLongPress'
-import { Flag } from '~/toolbar/button/icons/Flag'
-import { Fire } from '~/toolbar/button/icons/Fire'
-import { Magnifier } from '~/toolbar/button/icons/Magnifier'
-import { actionsTabLogic } from '~/toolbar/actions/actionsTabLogic'
-import { actionsLogic } from '~/toolbar/actions/actionsLogic'
-import { Close } from '~/toolbar/button/icons/Close'
-import { AimOutlined, QuestionOutlined } from '@ant-design/icons'
-import { Tooltip } from 'lib/components/Tooltip'
 
 const HELP_URL = 'https://posthog.com/docs/user-guides/toolbar?utm_medium=in-product&utm_campaign=toolbar-help-button'
 
@@ -59,8 +59,8 @@ export function ToolbarButton(): JSX.Element {
     const { isAuthenticated } = useValues(toolbarLogic)
     const { authenticate, logout } = useActions(toolbarLogic)
 
-    const globalMouseMove = useRef((e: MouseEvent) => {
-        e
+    const globalMouseMove = useRef((_e: MouseEvent) => {
+        
     })
 
     useEffect(() => {

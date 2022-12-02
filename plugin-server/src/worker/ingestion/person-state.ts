@@ -239,12 +239,12 @@ export class PersonState {
         const unsetProperties: Array<string> = this.eventProperties['$unset'] || []
 
         // Figure out which properties we are actually setting
-        Object.entries(propertiesOnce).map(([key, value]) => {
+        Object.entries(propertiesOnce).forEach(([key, value]) => {
             if (typeof personProperties[key] === 'undefined') {
                 updatedProperties[key] = value
             }
         })
-        Object.entries(properties).map(([key, value]) => {
+        Object.entries(properties).forEach(([key, value]) => {
             if (personProperties[key] !== value) {
                 updatedProperties[key] = value
             }

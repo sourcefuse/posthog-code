@@ -1,23 +1,16 @@
-import api from 'lib/api'
 import { kea } from 'kea'
-import type { systemStatusLogicType } from './systemStatusLogicType'
-import { userLogic } from 'scenes/userLogic'
-import {
-    SystemStatus,
-    SystemStatusRow,
-    SystemStatusQueriesResult,
-    SystemStatusAnalyzeResult,
-    OrganizationType,
-    UserType,
-    PreflightStatus,
-    InstanceSetting,
-} from '~/types'
-import { preflightLogic } from 'scenes/PreflightCheck/preflightLogic'
-import { organizationLogic } from 'scenes/organizationLogic'
+import api from 'lib/api'
+import { lemonToast } from 'lib/components/lemonToast'
 import { OrganizationMembershipLevel } from 'lib/constants'
 import { isUserLoggedIn } from 'lib/utils'
-import { lemonToast } from 'lib/components/lemonToast'
 import { eventUsageLogic } from 'lib/utils/eventUsageLogic'
+import { organizationLogic } from 'scenes/organizationLogic'
+import { preflightLogic } from 'scenes/PreflightCheck/preflightLogic'
+import { userLogic } from 'scenes/userLogic'
+import {
+    InstanceSetting, OrganizationType, PreflightStatus, SystemStatus, SystemStatusAnalyzeResult, SystemStatusQueriesResult, SystemStatusRow, UserType
+} from '~/types'
+import type { systemStatusLogicType } from './systemStatusLogicType'
 
 export enum ConfigMode {
     View = 'view',
@@ -218,7 +211,7 @@ export const systemStatusLogic = kea<systemStatusLogicType>({
         },
         saveInstanceConfig: async (_, breakpoint) => {
             actions.setUpdatedInstanceConfigCount(0)
-            Object.entries(values.instanceConfigEditingState).map(async ([key, value]) => {
+            Object.entries(values.instanceConfigEditingState).forEach(async ([key, value]) => {
                 try {
                     await api.update(`api/instance_settings/${key}`, {
                         value,

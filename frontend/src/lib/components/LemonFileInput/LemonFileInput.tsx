@@ -1,8 +1,8 @@
-import { ChangeEvent, createRef, RefObject, useEffect, useState } from 'react'
+import clsx from 'clsx'
 import { IconUploadFile } from 'lib/components/icons'
 import { LemonTag } from 'lib/components/LemonTag/LemonTag'
 import { Spinner } from 'lib/components/Spinner/Spinner'
-import clsx from 'clsx'
+import { ChangeEvent, createRef, RefObject, useEffect, useState } from 'react'
 import './LemonFileInput.scss'
 
 export interface LemonFileInputProps extends Pick<HTMLInputElement, 'multiple' | 'accept'> {
@@ -28,7 +28,7 @@ export const LemonFileInput = ({
     accept,
     alternativeDropTargetRef,
 }: LemonFileInputProps): JSX.Element => {
-    const [files, setFiles] = useState(value || value || ([] as File[]))
+    const [files, setFiles] = useState(value || ([] as File[]))
 
     // dragCounter and drag are used to track whether the user is dragging a file over the textarea
     // without drag counter the textarea highlight would flicker when the user drags a file over it
