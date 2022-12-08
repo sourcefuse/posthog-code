@@ -47,7 +47,7 @@ coreschema==0.0.4
     # via coreapi
 coverage==5.5
     # via pytest-cov
-cryptography==37.0.2
+cryptography==38.0.3
     # via
     #   -c requirements.txt
     #   pyopenssl
