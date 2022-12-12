@@ -1,7 +1,7 @@
 import json
 
 import requests
-from celery.task import Task
+from celery.app.task import Task
 from django.core.serializers.json import DjangoJSONEncoder
 
 
