@@ -20,7 +20,7 @@ attrs==21.4.0
     #   syrupy
 black==22.8.0
     # via -r requirements-dev.in
-certifi==2019.11.28
+certifi==2022.12.7
     # via
     #   -c requirements.txt
     #   requests
