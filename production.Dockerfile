@@ -31,8 +31,8 @@ WORKDIR /code/plugin-server
 # Install python, make and gcc as they are needed for the yarn install
 RUN apk --update --no-cache add \
     "make~=4.3" \
-    "g++~=11.2" \
-    "gcc~=11.2" \
+    "g++~=12.2" \
+    "gcc~=12.2" \
     "python3~=3.10"
 
 # Compile and install Yarn dependencies.
