@@ -7,7 +7,7 @@
 #
 # Build the frontend artifacts
 #
-FROM node:18.12.1-alpine3.16 AS frontend
+FROM node:18.12.1-alpine3.17 AS frontend
 
 WORKDIR /code
 
@@ -24,7 +24,7 @@ RUN yarn build
 # Build the plugin-server artifacts. Note that we still need to install the
 # runtime deps in the main image
 #
-FROM node:18.12.1-alpine3.16 AS plugin-server
+FROM node:18.12.1-alpine3.17 AS plugin-server
 
 WORKDIR /code/plugin-server
 
@@ -54,7 +54,7 @@ RUN yarn build
 
 # Build the posthog image, incorporating the Django app along with the frontend,
 # as well as the plugin-server
-FROM python:3.8.14-alpine3.16
+FROM python:3.8.15-alpine3.17
 
 ENV PYTHONUNBUFFERED 1
 
@@ -66,11 +66,11 @@ WORKDIR /code
 # If you temporary need a package to build a Python or npm
 # dependency take a look at the sections below.
 RUN apk --update --no-cache add \
-    "libpq~=14" \
+    "libpq~=15" \
     "libxslt~=1.1" \
-    "nodejs-current~=18" \
-    "chromium~=102" \
-    "chromium-chromedriver~=102" \
+    "nodejs-current~=19" \
+    "chromium~=108" \
+    "chromium-chromedriver~=108" \
     "xmlsec~=1.2"
 
 # Curl the GeoLite2-City database that will be used for IP geolocation within Django
@@ -105,18 +105,18 @@ RUN apk --update --no-cache --virtual .geolite-deps add \
 #   and then uninstall them when the compilation is completed.
 COPY requirements.txt ./
 RUN apk --update --no-cache --virtual .build-deps add \
-    "bash~=5.1" \
-    "g++~=11.2" \
-    "gcc~=11.2" \
-    "cargo~=1.60" \
+    "bash~=5.2" \
+    "g++~=12.2" \
+    "gcc~=12.2" \
+    "cargo~=1.64" \
     "git~=2" \
     "make~=4.3" \
     "libffi-dev~=3.4" \
-    "libxml2-dev~=2.9" \
+    "libxml2-dev~=2.10" \
     "libxslt-dev~=1.1" \
     "xmlsec-dev~=1.2" \
     "postgresql13-dev~=13" \
-    "libmaxminddb~=1.6" \
+    "libmaxminddb~=1.7" \
     && \
     pip install -r requirements.txt --compile --no-cache-dir \
     && \
@@ -148,7 +148,7 @@ RUN apk --update --no-cache add "yarn~=1"
 
 # NOTE: we need make and g++ for node-gyp
 # NOTE: npm is required for re2
-RUN apk --update --no-cache add "make~=4.3" "g++~=11.2" "npm~=8" --virtual .build-deps \
+RUN apk --update --no-cache add "make~=4.3" "g++~=12.2" "npm~=9" --virtual .build-deps \
     && yarn install --frozen-lockfile --production=true \
     && yarn cache clean \
     && apk del .build-deps
@@ -163,7 +163,7 @@ USER root
 COPY ./plugin-server/package.json ./plugin-server/
 
 # We need bash to run the bin scripts
-RUN apk --update --no-cache add "bash~=5.1"
+RUN apk --update --no-cache add "bash~=5.2"
 COPY ./bin ./bin/
 USER posthog
 
