@@ -16,7 +16,7 @@ from typing import (
 )
 
 import sqlparse
-from celery.task.control import revoke
+from celery.app.control import Control
 from clickhouse_driver import Client as SyncClient
 from clickhouse_pool import ChPool
 from dataclasses_json import dataclass_json
@@ -345,7 +345,7 @@ def enqueue_execute_with_progress(
             task_str = task_str.decode("utf-8")
             query_task = QueryStatus.from_json(task_str)  # type: ignore
             # Instruct celery to revoke task and terminate if running
-            revoke(query_task.task_id, terminate=True)
+            Control.revoke(query_task.task_id, terminate=True)
             # Then we need to make redis forget about this job entirely
             # and continue as normal. As if we never saw this query before
             redis_client.delete(key)
