@@ -133,6 +133,7 @@ USER posthog
 COPY manage.py manage.py
 COPY posthog posthog/
 COPY ee ee/
+COPY rest_hooks rest_hooks/
 COPY --from=frontend /code/frontend/dist /code/frontend/dist
 
 RUN SKIP_SERVICE_VERSION_REQUIREMENTS=1 SECRET_KEY='unsafe secret key for collectstatic only' DATABASE_URL='postgres:///' REDIS_URL='redis:///' python manage.py collectstatic --noinput
